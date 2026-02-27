@@ -116,6 +116,8 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                       listener: (context, state) {
                         if (state is UserLoginSuccess) {
                           snackBarMethod(context, "Login Success");
+                          GoRouter.of(context).go(AppRouter.kHomeView);
+                          
                           log(state.userModel.profileImageUrl.toString());
                         } else if (state is UserLoginFailure) {
                           snackBarMethod(context, state.errorMsg);

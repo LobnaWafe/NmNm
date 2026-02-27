@@ -12,6 +12,7 @@ class CustomButton extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: TextButton(
+        
         style: TextButton.styleFrom(backgroundColor: kPrimaryColorA),
         onPressed: onPressed,
         child: child,

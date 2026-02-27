@@ -3,7 +3,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:simple_face/core/utilis/Styles.dart';
+import 'package:simple_face/core/utilis/app_router.dart';
 import 'package:simple_face/features/authentication/presentation/view_model/user_sign_up/user_sign_up_cubit.dart';
 import 'package:simple_face/features/authentication/presentation/widgets/custom_button.dart';
 import 'package:simple_face/features/authentication/presentation/widgets/custom_form_feild.dart';
@@ -119,6 +121,7 @@ class _SingUpViewBodyState extends State<SingUpViewBody> {
                             listener: (context, state) {
                               if (state is UserSignUpSuccess) {
                                 snackBarMethod(context, "Sign up Success");
+                                GoRouter.of(context).go(AppRouter.kLogin);
                                 log(state.userModel.profileImageUrl.toString());
                               } else if (state is UserSignUpFailure) {
                                 snackBarMethod(context, state.errorMsg);

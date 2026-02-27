@@ -56,7 +56,7 @@ static  Future<bool> removeData({required String key}) async {
   }
 
 //! this fun to put data in local data base using key
-  Future<dynamic> put({
+static  Future<dynamic> put({
     required String key,
     required dynamic value,
   }) async {

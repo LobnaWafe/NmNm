@@ -1,10 +1,14 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_face/constants.dart';
-import 'package:simple_face/core/utilis/api_service.dart';
+import 'package:simple_face/core/utilis/api/dio_consumer.dart';
+
+
 import 'package:simple_face/features/authentication/presentation/view_model/user_login/user_login_cubit.dart';
 import 'package:simple_face/features/authentication/presentation/widgets/login_view_body.dart';
-import 'package:simple_face/features/authentication/repos/auth_repo_imp.dart';
+
+import 'package:simple_face/features/authentication/repos/auth_repo_imp_two.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -12,7 +16,7 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => UserLoginCubit(AuthRepoImp(api: ApiService())),
+      create: (context) => UserLoginCubit(AuthRepoImpTwo(api:DioConsumer(dio:Dio()))),
       child: Scaffold(
         backgroundColor: kPrimaryColorA,
         body: SafeArea(child: LoginViewBody()),
