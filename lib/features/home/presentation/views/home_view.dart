@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simple_face/constants.dart';
+import 'package:simple_face/core/services/noti/push_notification_services.dart';
 import 'package:simple_face/features/home/presentation/views/chats_view.dart';
 import 'package:simple_face/features/home/presentation/views/friends_view.dart';
 import 'package:simple_face/features/home/presentation/views/settings_view.dart';
@@ -14,6 +15,13 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   List<Widget> widgets = [ChatsView(), FriendsView(), SettingsView()];
   var index = 0;
+ 
+  @override
+  void initState() {
+    // TODO: implement initState
+    PushNotificationServices.init(); // <<--
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

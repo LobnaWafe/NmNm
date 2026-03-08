@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:simple_face/core/services/noti/push_notification_services.dart';
 import 'package:simple_face/core/utilis/cach_helper.dart';
 import 'package:simple_face/features/authentication/presentation/views/code_check_view.dart';
 import 'package:simple_face/features/authentication/presentation/views/forget_password_view.dart';
@@ -27,6 +28,8 @@ abstract class AppRouter {
       final isAtStart = state.matchedLocation == kLogin;
 
       if (isAtStart && token != null) {
+
+
         return kHomeView; // لو مسجل وديه الهوم فوراً
       }
 

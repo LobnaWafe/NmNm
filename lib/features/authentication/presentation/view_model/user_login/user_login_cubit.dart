@@ -14,6 +14,7 @@ class UserLoginCubit extends Cubit<UserLoginState> {
   Future<void>login({required String email, required String password})async{
     emit(UserLoginLoading());
     var data=await authRepo.login(email: email, password: password);
+    
     data.fold((failure){
       emit(UserLoginFailure(errorMsg: failure.errorMsg));
     }, (user)async{
