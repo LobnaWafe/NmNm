@@ -1,7 +1,9 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:simple_face/core/services/noti/local_notification_services.dart';
+import 'package:simple_face/core/utilis/cach_helper.dart';
 import 'package:simple_face/core/utilis/signl_r_services.dart';
 import 'package:simple_face/features/home/data/models/users_system_mode.dart';
 import 'package:simple_face/features/home/presentation/view_models/get_messages_in_chat/get_messages_in_chat_cubit.dart';
@@ -23,6 +25,11 @@ class _RoomViewBodyState extends State<RoomViewBody> {
   @override
   void initState() {
     super.initState();
+  
+      String token = CacheHelper.getData(key: "token");
+    Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+    var myId = decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
+
 
     // 1. جلب الرسائل القديمة
     // 1. جلب الرسائل القديمة من الـ API
@@ -40,7 +47,7 @@ class _RoomViewBodyState extends State<RoomViewBody> {
     _signalRService.startConnection(
       onMessageReceived: (newMessage) {
         if (mounted) {
-          if (newMessage.senderId == widget.user.id) {
+          if (newMessage.senderId == widget.user.id || newMessage.senderId ==myId) {
             // 1. أضف الرسالة للشات مباشرة
             context.read<GetMessagesInChatCubit>().addNewMessage(newMessage);
 
@@ -48,6 +55,12 @@ class _RoomViewBodyState extends State<RoomViewBody> {
             _signalRService.markAsRead(widget.user.id);
           } else {
             // 🔔 الرسالة من شخص آخر -> حولها لـ RemoteMessage وأظهر نوتفيكيشن
+            
+             print("receId ${newMessage.receiverId}");
+              print("snderId ${newMessage.senderId}");
+               print("user id ${widget.user.id}");
+               print("my id ${myId}");
+
             RemoteMessage remoteMessage = RemoteMessage(
               notification: RemoteNotification(
                 title: "رسالة جديدة",
